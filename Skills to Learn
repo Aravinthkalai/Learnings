@@ -1,0 +1,64 @@
+Topics to Learn 
+=================
+Linker script check STM32 cube IDE
+map file chec STM32 cube IDE
+ARM Cortex
+FSM
+NVIDIA Jetson
+RISC-V
+cmake
+Linux Kernel
+yocto
+Build root
+Debugging using JTAG or SWD
+Device Drivers
+IAR Embedded Workbench
+TinyCC
+RISC-V GCC
+VisualDSP++
+Segger Embedded Studio
+OCD (On-Chip Debugging)
+ICE (In-Circuit Emulator)
+GDB
+FreeRTOS
+ThreadX
+QNX
+VxWorks
+Simulink
+Embedded coder
+TargetLink
+BLE 
+zigbee
+Z-wave
+NFC
+Wi-Fi
+loRA
+NB-IoT
+Sigfox
+HTTP
+LTE-M
+Mod Bus
+Ethernet
+CAN, CAN - FD, GitLab CI/CD, Docker
+
+
+
+1.	Expertise in Linux kernel internals, device drivers (V4L2, clocks, MMU), and ARM (v8/v9) architecture
+2.	Expert-level C programming with proficiency in C++, Python, and shell scripting
+3.	Hands-on experience with camera drivers, imaging pipelines (3A, HDR), MIPI-CSI, and video codecs (H.264/H.265)
+4.	Deep understanding of Linux security features like SELinux, secure boot, kernel mitigations, and vulnerability analysis tools
+5.	Experience with RTOS environments (FreeRTOS, QNX) and developing/debugging low-level firmware including DSP integration
+
+
+
+Linux:
+======
+•	Linux kernel, kernel memory, Linux device driver, ARM, X86
+•	Secure OS & Partitioning, NixOS, Virtualization, cross-compilation,
+•	Python,  Rust programming, Bootloader  
+•	Board Support Package (BSP), Bootloaders
+•	Linux HAL (Hardware Abstraction Layer) - SPI, I²C, UART, GPIO
+•	Wireless/Radio software development 
+•	Low-level GPU programming (Intel, Nvidia)
+
+
