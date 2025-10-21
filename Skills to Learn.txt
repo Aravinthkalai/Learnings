@@ -53,12 +53,26 @@ CAN, CAN - FD, GitLab CI/CD, Docker
 
 Linux:
 ======
-•	Linux kernel, kernel memory, Linux device driver, ARM, X86
-•	Secure OS & Partitioning, NixOS, Virtualization, cross-compilation,
-•	Python,  Rust programming, Bootloader  
-•	Board Support Package (BSP), Bootloaders
-•	Linux HAL (Hardware Abstraction Layer) - SPI, I²C, UART, GPIO
-•	Wireless/Radio software development 
-•	Low-level GPU programming (Intel, Nvidia)
+1. Linux commands
+2. Shell scripting
+3. Build systems (Make/CMake/Meson)
+4. Cross-compilation
+5. Rust programming (optional)
+6. Bootloader
+7. BSP
+8. Device Tree
+9. Linux HAL (SPI/I2C/UART/GPIO)
+10. Linux device drivers
+11. Linux kernel programming
+12. Kernel memory
+13. Real-Time Linux (PREEMPT_RT)
+14. Debugging tools
+15. Yocto
+16. Secure OS & partitioning
+17. Containerization (Docker/Podman)
+18. Virtualization
+19. Wireless/Radio software
+20. Low-level GPU programming
+21. NixOS (optional)
 
 
