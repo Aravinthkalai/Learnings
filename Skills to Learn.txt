@@ -76,3 +76,176 @@ Linux:
 21. NixOS (optional)
 
 
+
+
+Linux Learning Order
+=====================
+
+Phase 1: Foundations (System & OS Concepts)
+
+Start here to build strong Linux and embedded fundamentals.
+
+Basic Linux OS Concepts
+
+Processes, threads, scheduling
+
+Memory management, file system, IPC
+
+System calls, user-space vs kernel-space
+
+Shell Scripting & Command Line Mastery
+
+bash scripting, automation, awk/sed/grep, permissions
+
+Process monitoring (ps, top, htop, dmesg, journalctl)
+
+Version Control
+
+Git basics, branching, merging
+
+GitLab CI/CD pipelines for automated build/test
+
+⚙️ Phase 2: Build & Toolchain Ecosystem
+
+Focus on how embedded Linux systems are built.
+
+Cross Compilation
+
+Toolchains, GCC, sysroot, target architecture
+
+Build Systems
+
+CMake (for native builds)
+
+Buildroot basics
+
+Yocto Project (meta-layers, recipes, bitbake, SDK)
+
+Package Management
+
+rpm/deb/opkg concepts
+
+Containerization
+
+Docker basics and for embedded CI/CD integration
+
+🔩 Phase 3: Boot & System Bring-up
+
+Learn how a Linux-based board boots and how to customize it.
+
+Bootloader
+
+U-Boot architecture, environment variables, device tree loading
+
+Boot flow: BootROM → Bootloader → Kernel → Init
+
+Kernel & Device Tree
+
+Linux kernel structure, configuration, build
+
+Writing and customizing Device Tree files
+
+On-Chip Debugging (OCD)
+
+JTAG, SWD, OpenOCD setup
+
+GDB and remote debugging
+
+🔧 Phase 4: Driver & OS Development
+
+Deep dive into system-level programming.
+
+Device Drivers
+
+Character & block drivers, GPIO, I2C, SPI, UART
+
+Interrupt handling, memory-mapped I/O
+
+Kernel modules (loadable & built-in)
+
+Kernel Internals
+
+Scheduling, synchronization, memory allocation (kmalloc/slab)
+
+Procfs/sysfs/debugfs interfaces
+
+⏱️ Phase 5: RTOS & Real-Time Concepts
+
+For hybrid systems and non-Linux embedded development.
+
+FreeRTOS – basic tasks, queues, semaphores, timers
+
+ThreadX, QNX, VxWorks – concept-level comparison
+
+Real-Time Linux – PREEMPT_RT patches
+
+🧰 Phase 6: Embedded Model-Based Design
+
+Used heavily in automotive and industrial control systems.
+
+Simulink – model-based system design
+
+Embedded Coder – generate optimized C code
+
+TargetLink – auto-code generation for production ECUs
+
+📡 Phase 7: Communication Protocols & Connectivity
+
+Broaden your system-level integration knowledge.
+
+Wired Protocols
+
+Modbus, Ethernet, TCP/IP stack, HTTP
+
+Wireless Connectivity
+
+BLE, Zigbee, Z-Wave, NFC, Wi-Fi, LoRa, NB-IoT, Sigfox, LTE-M
+
+Basics of RF, power management, and integration in embedded systems
+
+🧩 Phase 8: Advanced Topics
+
+Security
+
+Secure Boot, TPM, encryption basics
+
+Performance & Optimization
+
+Profiling tools (perf, ftrace, strace, valgrind)
+
+Systemd & Init Systems
+
+Service management and startup configuration
+
+Networking Tools
+
+ifconfig/iproute2, netcat, Wireshark, socket programming
+
+📘 Optional Add-ons (Depending on Career Focus)
+
+Edge AI / ML integration (TensorFlow Lite, ONNX Runtime)
+
+OTA update frameworks (SWUpdate, Mender)
+
+CAN bus, LIN, automotive stack (if automotive focus)
+
+Power management and battery systems
+
+✅ Suggested Learning Order Summary
+
+OS Concepts → Shell → Git & CI/CD
+
+Build Systems (CMake → Buildroot → Yocto)
+
+Cross Compilation → Bootloader → Kernel → Drivers
+
+Debugging (OCD, GDB) → Device Tree
+
+FreeRTOS & RTOS Concepts
+
+Model-based design (Simulink, TargetLink)
+
+Communication Protocols (wired → wireless)
+
+Security, Systemd, Optimization
+
