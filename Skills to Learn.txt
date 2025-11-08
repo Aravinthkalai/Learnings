@@ -82,6 +82,7 @@ Linux Learning Order
 =====================
 
 Phase 1: Foundations (System & OS Concepts)
+--------------------------------------------------
 
 Start here to build strong Linux and embedded fundamentals.
 
@@ -106,6 +107,7 @@ Git basics, branching, merging
 GitLab CI/CD pipelines for automated build/test
 
 ⚙️ Phase 2: Build & Toolchain Ecosystem
+----------------------------------------------
 
 Focus on how embedded Linux systems are built.
 
@@ -130,6 +132,7 @@ Containerization
 Docker basics and for embedded CI/CD integration
 
 🔩 Phase 3: Boot & System Bring-up
+---------------------------------------
 
 Learn how a Linux-based board boots and how to customize it.
 
@@ -152,6 +155,7 @@ JTAG, SWD, OpenOCD setup
 GDB and remote debugging
 
 🔧 Phase 4: Driver & OS Development
+-----------------------------------------------
 
 Deep dive into system-level programming.
 
@@ -170,6 +174,7 @@ Scheduling, synchronization, memory allocation (kmalloc/slab)
 Procfs/sysfs/debugfs interfaces
 
 ⏱️ Phase 5: RTOS & Real-Time Concepts
+-----------------------------------------
 
 For hybrid systems and non-Linux embedded development.
 
@@ -180,6 +185,7 @@ ThreadX, QNX, VxWorks – concept-level comparison
 Real-Time Linux – PREEMPT_RT patches
 
 🧰 Phase 6: Embedded Model-Based Design
+----------------------------------------------
 
 Used heavily in automotive and industrial control systems.
 
@@ -190,6 +196,7 @@ Embedded Coder – generate optimized C code
 TargetLink – auto-code generation for production ECUs
 
 📡 Phase 7: Communication Protocols & Connectivity
+---------------------------------------------------------
 
 Broaden your system-level integration knowledge.
 
@@ -204,6 +211,7 @@ BLE, Zigbee, Z-Wave, NFC, Wi-Fi, LoRa, NB-IoT, Sigfox, LTE-M
 Basics of RF, power management, and integration in embedded systems
 
 🧩 Phase 8: Advanced Topics
+------------------------------------------
 
 Security
 
@@ -222,6 +230,7 @@ Networking Tools
 ifconfig/iproute2, netcat, Wireshark, socket programming
 
 📘 Optional Add-ons (Depending on Career Focus)
+----------------------------------------------------
 
 Edge AI / ML integration (TensorFlow Lite, ONNX Runtime)
 
@@ -232,6 +241,7 @@ CAN bus, LIN, automotive stack (if automotive focus)
 Power management and battery systems
 
 ✅ Suggested Learning Order Summary
+--------------------------------------------
 
 OS Concepts → Shell → Git & CI/CD
 
