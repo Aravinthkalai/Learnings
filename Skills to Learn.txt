@@ -259,3 +259,42 @@ Communication Protocols (wired → wireless)
 
 Security, Systemd, Optimization
 
+
+
+Recommended Plan Based on Career Goal
+If your goal is Embedded Linux Engineer (Industry-standard)
+
+Learn only these phases:
+
+Phase 1
+
+Phase 2 (except RPM/DEB & Docker advanced)
+
+Phase 3
+
+Phase 4
+
+Phase 8 (optimization + systemd + security basics)
+
+⏳ Duration = 6–7 months
+
+If your goal is Firmware/RTOS Engineer
+
+Focus on:
+
+Phase 1
+
+Phase 5
+
+Phase 7
+
+Some parts of Phase 4
+
+⏳ Duration = 3–4 months
+
+If your goal is Embedded Architect (full stack)
+
+Learn everything
+⏳ 11–14 months
+
+
