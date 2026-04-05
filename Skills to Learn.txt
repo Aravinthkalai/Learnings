@@ -150,7 +150,8 @@ Writing and customizing Device Tree files
 
 On-Chip Debugging (OCD)
 
-JTAG, SWD, OpenOCD setup
+JTAG Ozone GUI debugger, SWD, OpenOCD setup
+
 
 GDB and remote debugging
 
