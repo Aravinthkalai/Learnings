@@ -1,0 +1,274 @@
+0 - dominant
+1 - recessive
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+CAN PHYSICAL LAYER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Wheel sensor (ABS)
+Constructed using magnet. When wheel cuts the magnetic field it sends 0,
+then goes back to 1. Creates pulses — based on pulse count/frequency,
+braking (ABS) is applied.
+
+Ultrasonic sensor — used for parking (PDC - Park Distance Control)
+
+CAN Voltage Levels
+Recessive (logic 1): CANH ≈ 2.5V, CANL ≈ 2.5V  →  differential ≈ 0V
+Dominant  (logic 0): CANH ≈ 3.5V, CANL ≈ 1.5V  →  differential ≈ 2V
+Bus is dominant-wins (wired-AND). Both lines sit at 2.5V at rest.
+
+120Ω termination resistors at both ends of the bus to avoid signal
+reflection. Two 120Ω in parallel = 60Ω, matching the cable's
+characteristic impedance.
+
+CAN Bus Speeds
+High-speed CAN (ISO 11898-2) : up to 1 Mbit/s   — powertrain, chassis
+Low-speed fault-tolerant CAN : up to 125 Kbit/s  — body electronics
+CAN FD (Flexible Data Rate)  : up to 8 Mbit/s data phase, 64-byte payload
+
+System Architecture
+DSP (digital signal processor) / controller / sensor / actuator
+        |
+Embedded controller (MCU/ECU — has built-in CAN controller,
+handles framing and arbitration)
+        |
+CAN Transceiver (e.g. TJA1050 — converts digital logic to differential)
+        |
+     CANH, CANL
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DATA FRAME — 11-BIT (Standard)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SOF — Start of Frame (1 bit, always 0/dominant)
+
+11-bit Identifier (11 bits)
+Defines message priority. All bits 0 = highest priority.
+
+RTR — Remote Transmission Request (1 bit)
+0 = data frame
+
+Control Field:
+  IDE — Identifier Extension bit (1 bit)
+        0 = 11-bit identifier, 1 = 29-bit identifier
+  R0  — Reserved bit (1 bit)
+  DLC — Data Length Code (4 bits)
+        Denotes length of data. e.g. 2 bytes → DLC = 0010 (8421)
+
+Data (0–8 bytes, max 64 bits)
+
+CRC — Cyclic Redundancy Check (15 bits)
+CRC Delimiter (1 bit, always 1)
+
+ACK (1 bit)
+If all receivers receive data correctly, transmitter drives line to 0.
+ACK Delimiter (1 bit, always 1)
+
+EOF — End of Frame (7 bits, continuous 1s: 1111111)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+DATA FRAME — 29-BIT (Extended)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SOF (1 bit, always 0)
+
+Arbitration Field:
+  11-bit Identifier (11 bits)
+  SRR — Substitute Remote Request (1 bit, always 1)
+        Placeholder for RTR bit position in 11-bit frames.
+        Ensures 11-bit frames win arbitration over 29-bit at this bit.
+  IDE — 1 (1 bit, denotes 29-bit identifier)
+  18-bit Identifier (18 bits)
+
+RTR (1 bit, 0 = data frame)
+
+Control Field:
+  R1, R0 — Reserved bits (2 bits)
+  DLC — Data Length Code (4 bits)
+
+Data, CRC, ACK, EOF — same as 11-bit frame
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+REMOTE FRAME
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+If a receiver needs particular data but the transmitter is not sending it,
+the receiver can request it by sending a remote frame on the bus.
+The transmitter (node owning that CAN ID) responds with a data frame
+of the same identifier.
+Note: remote frames are rarely used in modern automotive CAN —
+most systems use periodic or event-driven data frames instead.
+
+11-bit Remote Frame:
+  SOF (1 bit, always 0)
+  11-bit Identifier (11 bits)
+  RTR = 1 (1 bit — indicates remote frame)
+  IDE = 0 (1 bit — 11-bit identifier)
+  R0 — Reserved (1 bit)
+  DLC (4 bits) — requested data length
+  CRC (15 bits)
+  CRC Delimiter (1 bit, always 1)
+  ACK (1 bit, 0)
+  ACK Delimiter (1 bit, always 1)
+  EOF (8 bits)
+
+29-bit Remote Frame:
+  SOF (1 bit, always 0)
+  11-bit Identifier (11 bits)
+  SRR = 1 (1 bit) — arbitration: after 11-bit identifier, 12th bit is 1
+        in 29-bit vs 0 (RTR) in 11-bit, so 11-bit frame wins arbitration.
+        For remote frame arbitration at IDE bit: 11-bit IDE=0, 29-bit IDE=1
+        so 11-bit remote frame wins.
+  IDE = 1 (1 bit)
+  18-bit Identifier (18 bits)
+  RTR = 0 (1 bit)
+  R1, R0 — Reserved (2 bits, always 0)
+  DLC (4 bits)
+  CRC (15 bits)
+  CRC Delimiter (1 bit, always 1)
+  ACK (1 bit, 0)
+  ACK Delimiter (1 bit, always 1)
+  EOF (8 bits)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ERROR FRAME
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+If a node detects it sent or received wrong data, it sends an error frame
+to signal that the last transmitted data was invalid.
+
+Error frame may occur after a data frame or before interframe space.
+
+Active Error Frame (node in active error state):
+  Active Error Flag  (6 bits, all dominant/0) — intentionally violates
+                     bit stuffing rule to signal error to all nodes
+  Error Echo         (6 bits, dominant)
+  Error Delimiter    (8 bits)
+
+Passive Error Frame (node in passive error state):
+  Passive Error Flag (6 bits, all recessive/1) — other nodes may not
+                     detect this; only the transmitting node is affected
+  Error Delimiter    (8 bits)
+
+Error Types:
+  Bit error    — node transmits 1 bit but reads back a different value
+  Stuff error  — 6 or more consecutive bits of same polarity detected
+                 in a stuffed region (SOF to end of CRC)
+  CRC error    — computed CRC does not match received CRC
+  Form error   — fixed-form fields (EOF, ACK delimiter, CRC delimiter)
+                 contain illegal bits
+  ACK error    — transmitter receives no ACK (no node confirmed receipt)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+OVERLOAD FRAME
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Similar concept to I2C clock stretching.
+If a receiver node is busy (e.g. serving a high priority interrupt) and
+cannot process the next frame, it sends an overload frame on the bus
+to request extra delay.
+
+  Overload Flag          (6 bits, all dominant/1)
+  Superposition of flags (6 bits)
+  Overload Delimiter     (8 bits)
+
+May occur after: EOF, error delimiter, overload delimiter, or before
+interframe space.
+Multiple overload frames can follow each other — no interframe space
+between them.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+BIT STUFFING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+After 5 consecutive bits of the same polarity, the transmitter inserts
+one stuffed bit of opposite polarity. The receiver detects and strips it.
+A violation (6+ consecutive same-polarity bits) triggers a stuff error.
+Applies from SOF to end of CRC field.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+FAULT CONFINEMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Each node maintains two counters:
+  TEC — Transmit Error Counter
+  REC — Receive Error Counter
+
+Counter rules:
+  Transmit error detected → TEC +8
+  Receive error detected  → REC +1
+  Successful frame        → TEC or REC −1
+
+States:
+  Active Error  : TEC and REC < 128
+                  Node participates normally, sends active error flags
+  Passive Error : TEC or REC ≥ 128
+                  Node sends passive error flags (recessive),
+                  must wait during suspend transmission before retransmit
+  Bus Off       : TEC ≥ 256
+                  Node disconnects from bus completely.
+                  Recovery: node must observe 128 × 11 consecutive
+                  recessive bits before re-joining.
+
+Bit error example: node transmits 0 but line reads as 1 → TEC +8
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+INTERFRAME SPACE (IFS)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Separates frames and gives nodes time to process between transmissions.
+IFS does NOT occur between consecutive error frames or overload frames.
+
+  Intermission        (3 bits)
+  During this window a node can begin sending an overload frame if needed.
+
+  Suspend Transmission (8 bits)
+  Only for passive error nodes. Active error nodes skip this and go
+  directly from intermission to bus idle.
+
+  Bus Idle            (recessive, no fixed length)
+  Line held high (pull-up). Any node can start a new frame from here.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+AUTOMATIC RETRANSMIT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+If data is corrupted or arbitration is lost, the CAN controller
+automatically retransmits the frame once the bus becomes idle.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+HLP — HIGH LEVEL PROTOCOLS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CAN only defines physical + data link layers (OSI 1 & 2).
+HLPs add application-layer structure on top:
+  CANopen  — industrial automation
+  J1939    — trucks and heavy vehicles
+  AUTOSAR COM — automotive ECUs
+  UDS over CAN — diagnostics (tester ↔ ECU)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+UDS — UNIFIED DIAGNOSTIC SERVICES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+UDS (ISO 14229) uses ISO 15765-2 (CAN TP) as transport layer for
+transferring data larger than 8 bytes between ECU and tester.
+
+ISO 15765-2 frame types:
+  SF  — Single Frame      : payload ≤ 7 bytes, sent in one CAN frame
+  FF  — First Frame       : first segment of a multi-frame message
+  CF  — Consecutive Frame : subsequent segments of multi-frame message
+  FC  — Flow Control      : receiver → transmitter response,
+                            specifies block size and separation time
+                            to pace consecutive frame transmission
