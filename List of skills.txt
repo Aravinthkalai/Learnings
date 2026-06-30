@@ -1,0 +1,55 @@
+C (Expert level)
+Pointers, memory layout, bitwise ops, volatile, inline asm, MISRA-C awareness
+
+
+Linker Scripts & Startup Code
+Memory sections (.text, .data, .bss), vector tables, crt0, scatter files
+
+Memory Management
+Stack vs heap, memory pools, fragmentation, MPU/MMU basics
+
+MCU Peripherals
+GPIO, UART, SPI, I²C, CAN, USB, ADC/DAC, DMA, Timers — register-level config
+
+Interrupt Architecture
+NVIC, ISR design, priority levels, nested interrupts, latency budgeting
+
+Clock & Power Domains
+PLL config, clock trees, low-power modes (sleep/stop/standby), wakeup sources
+
+Flash & Storage
+NOR/NAND Flash, EEPROM emulation, wear leveling, bootloader design, OTA
+
+Hardware Interfaces
+Schematic reading, signal integrity basics, level shifting, pull-up/down, ESD
+
+
+RTOS Internals
+FreeRTOS / Zephyr / ThreadX — scheduler, context switch, tick, port layer
+
+
+Synchronization Primitives
+Mutexes, semaphores, queues, event flags, priority inversion, deadlock avoidance
+
+Real-Time Scheduling
+Rate monotonic, EDF, WCET analysis, jitter measurement, task profiling
+
+JTAG / SWD Debugging
+GDB, OpenOCD, J-Link, SWV/ITM trace, ETM, breakpoints, watch-points
+
+Logic Analyzer & Oscilloscope
+Protocol decode (SPI/I²C/UART), timing diagrams, glitch capture
+
+GCC / Clang Toolchain
+Optimization flags, LTO, map files, objdump, size analysis, cross-compilation
+
+Build Systems
+CMake, Make, west (Zephyr), Kconfig, IDE-agnostic build pipelines
+
+CAN / CAN-FD
+Frame formats, arbitration, error handling, DBC files, CANopen basics
+
+USB (Device/Host)
+Descriptors, endpoints, transfer types (bulk/interrupt/iso), USB-C awareness
+
+C++ for Embedded
