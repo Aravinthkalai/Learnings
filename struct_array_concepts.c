@@ -224,7 +224,8 @@ void s2_padding_alignment(void)
      *   - NEVER assume sizeof(struct) = sum of members
      *   - Order members largest→smallest to reduce padding
      *   - offsetof() — compile-time, zero overhead
-     *   - Struct size is always multiple of its largest member's alignment
+     *   - """""" %%% Struct size is always multiple of its largest member's alignment :)""""
+     *     Alignment is always based on next member data type + current offset
      *   - Padding can be up to (alignment-1) bytes
      *   - Rule: each member starts at offset that is multiple of its alignment
      */
@@ -279,7 +280,9 @@ struct UdpHeader {
     uint16_t length;
     uint16_t checksum;
 };
+/*It restores the packing for the next structures, not the one that was already defined.*/
 #pragma pack(pop)
+
 
 void s3_struct_packing(void)
 {
@@ -1388,6 +1391,8 @@ void a1_array_decay(void)
 
     /*
      * INTERVIEW NOTES:
+     *   - Array decay means an array automatically converts ("decays (destroyed or losses identity)") into a pointer to 
+     *     its first element in most expressions.
      *   - Array → pointer decay: array name becomes &arr[0] in expressions
      *   - Exceptions where array does NOT decay: sizeof(), &arr, _Alignof()
      *   - arr and &arr[0]: same address, same type (int*)
